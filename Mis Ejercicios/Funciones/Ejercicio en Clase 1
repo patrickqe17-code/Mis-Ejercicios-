@@ -1,0 +1,76 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+// --- RUTINA 1: FUNCIÓN PARA ORDENAR DE MENOR A MAYOR ---
+void ordenarAscendente(vector<int>& v) {
+    int n = v.size();
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (v[j] > v[j + 1]) {
+                int aux = v[j];
+                v[j] = v[j + 1];
+                v[j + 1] = aux;
+            }
+        }
+    }
+}
+
+// --- RUTINA 2: FUNCIÓN PARA ORDENAR DE MAYOR A MENOR ---
+void ordenarDescendente(vector<int>& v) {
+    int n = v.size();
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (v[j] < v[j + 1]) {
+                int aux = v[j];
+                v[j] = v[j + 1];
+                v[j + 1] = aux;
+            }
+        }
+    }
+}
+
+// FUNCIÓN AUXILIAR: Para no repetir el código de mostrar el vector
+void mostrarVector(const vector<int>& v) {
+    for (int x : v) {
+        cout << x << " ";
+    }
+    cout << endl;
+}
+
+int main() {
+    // Definimos el vector base (puedes cambiar estos números si deseas)
+    vector<int> miVector = {45, 12, 89, 23};
+    int opcion;
+
+    cout << "--- VECTOR ORIGINAL ---" << endl;
+    mostrarVector(miVector);
+    cout << "-----------------------" << endl;
+
+    // MENÚ DE DECISIÓN
+    cout << "¿Como deseas ordenar el vector?" << endl;
+    cout << "1. Ordenar de forma Ascendente (Menor a Mayor)" << endl;
+    cout << "2. Ordenar de forma Descendente (Mayor a Menor)" << endl;
+    cout << "Selecciona una opcion (1 o 2): ";
+    cin >> opcion;
+
+    cout << endl << "--- RESULTADO ---" << endl;
+
+    // Evaluamos lo que el usuario decidió
+    if (opcion == 1) {
+        ordenarAscendente(miVector);
+        cout << "Vector Ordenado Ascendente: ";
+        mostrarVector(miVector);
+    } 
+    else if (opcion == 2) {
+        ordenarDescendente(miVector);
+        cout << "Vector Ordenado Descendente: ";
+        mostrarVector(miVector);
+    } 
+    else {
+        cout << "Opcion no valida. Saliendo del programa." << endl;
+    }
+
+    return 0;
+}
