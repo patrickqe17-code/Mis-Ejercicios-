@@ -1,44 +1,63 @@
 #include <iostream>
-#include <fstream>
+
 using namespace std;
 
 int main() {
 
-    ofstream salida("datos.txt");
+    int filas, columnas;
 
-    int n;
+    cout << "Numero de filas: ";
+    cin >> filas;
 
-    cout << "Cantidad de numeros: ";
-    cin >> n;
+    cout << "Numero de columnas: ";
+    cin >> columnas;
 
-    while (n <= 0) {
+    while (filas <= 0 || columnas <= 0) {
 
-        cout << "Cantidad invalida. Intente nuevamente: ";
-        cin >> n;
+        cout << "Dimensiones invalidas.\n";
+
+        cout << "Filas: ";
+        cin >> filas;
+
+        cout << "Columnas: ";
+        cin >> columnas;
     }
 
-    int numero;
+    int **matriz = new int*[filas];
 
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < filas; i++) {
 
-        cout << "Numero " << i + 1 << ": ";
-        cin >> numero;
-
-        salida << numero << endl;
+        matriz[i] = new int[columnas];
     }
 
-    salida.close();
+    cout << "\nIngrese los elementos:\n";
 
-    ifstream entrada("datos.txt");
+    for (int i = 0; i < filas; i++) {
 
-    cout << "\nContenido del archivo:\n";
+        for (int j = 0; j < columnas; j++) {
 
-    while (entrada >> numero) {
-
-        cout << numero << endl;
+            cin >> matriz[i][j];
+        }
     }
 
-    entrada.close();
+    cout << "\nMatriz ingresada:\n";
+
+    for (int i = 0; i < filas; i++) {
+
+        for (int j = 0; j < columnas; j++) {
+
+            cout << matriz[i][j] << " ";
+        }
+
+        cout << endl;
+    }
+
+    for (int i = 0; i < filas; i++) {
+
+        delete[] matriz[i];
+    }
+
+    delete[] matriz;
 
     return 0;
 }
