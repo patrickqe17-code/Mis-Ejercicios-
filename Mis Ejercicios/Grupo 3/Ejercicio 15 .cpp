@@ -1,68 +1,49 @@
 #include <iostream>
 using namespace std;
 
-void quickSort(int v[], int izquierda, int derecha) {
-
-    int i = izquierda;
-    int j = derecha;
-
-    int pivote = v[(izquierda + derecha) / 2];
-
-    while (i <= j) {
-
-        while (v[i] < pivote)
-            i++;
-
-        while (v[j] > pivote)
-            j--;
-
-        if (i <= j) {
-
-            int aux = v[i];
-            v[i] = v[j];
-            v[j] = aux;
-
-            i++;
-            j--;
-        }
-    }
-
-    if (izquierda < j)
-        quickSort(v, izquierda, j);
-
-    if (i < derecha)
-        quickSort(v, i, derecha);
-}
-
 int main() {
 
     int n;
 
-    cout << "Cantidad de elementos: ";
+    cout << "Dimension de la matriz: ";
     cin >> n;
 
-    while (n <= 0 || n > 100) {
+    while (n <= 0 || n > 20) {
 
-        cout << "Cantidad invalida. Intente nuevamente: ";
+        cout << "Dimension invalida. Intente nuevamente: ";
         cin >> n;
     }
 
-    int v[100];
+    int matriz[20][20];
+
+    cout << "\nIngrese la matriz:\n";
 
     for (int i = 0; i < n; i++) {
 
-        cout << "Elemento " << i + 1 << ": ";
-        cin >> v[i];
+        for (int j = 0; j < n; j++) {
+
+            cin >> matriz[i][j];
+        }
     }
 
-    quickSort(v, 0, n - 1);
+    bool simetrica = true;
 
-    cout << "\nVector ordenado:\n";
+    for (int i = 0; i < n && simetrica; i++) {
 
-    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
 
-        cout << v[i] << " ";
+            if (matriz[i][j] != matriz[j][i]) {
+
+                simetrica = false;
+                break;
+            }
+        }
     }
+
+    if (simetrica)
+        cout << "\nLa matriz es simetrica.";
+    else
+        cout << "\nLa matriz NO es simetrica.";
 
     return 0;
 }
