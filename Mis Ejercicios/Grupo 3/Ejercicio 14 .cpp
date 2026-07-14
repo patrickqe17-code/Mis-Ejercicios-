@@ -1,29 +1,57 @@
 #include <iostream>
+
 using namespace std;
 
-int sumaNaturales(int n) {
+void ordenar(int v[], int n) {
 
-    if (n == 1)
-        return 1;
+    for (int i = 0; i < n - 1; i++) {
 
-    return n + sumaNaturales(n - 1);
+        for (int j = 0; j < n - i - 1; j++) {
+
+            if (v[j] > v[j + 1]) {
+
+                int aux = v[j];
+                v[j] = v[j + 1];
+                v[j + 1] = aux;
+            }
+        }
+    }
+}
+
+void imprimir(int v[], int n) {
+
+    cout << "\nVector ordenado:\n";
+
+    for (int i = 0; i < n; i++) {
+
+        cout << v[i] << " ";
+    }
 }
 
 int main() {
 
     int n;
 
-    cout << "Ingrese un numero: ";
+    cout << "Cantidad de elementos: ";
     cin >> n;
 
-    while (n <= 0) {
+    while (n <= 0 || n > 100) {
 
-        cout << "Numero invalido. Intente nuevamente: ";
+        cout << "Cantidad invalida. Intente nuevamente: ";
         cin >> n;
     }
 
-    cout << "Suma = "
-         << sumaNaturales(n);
+    int v[100];
+
+    for (int i = 0; i < n; i++) {
+
+        cout << "Elemento " << i + 1 << ": ";
+        cin >> v[i];
+    }
+
+    ordenar(v, n);
+
+    imprimir(v, n);
 
     return 0;
 }
