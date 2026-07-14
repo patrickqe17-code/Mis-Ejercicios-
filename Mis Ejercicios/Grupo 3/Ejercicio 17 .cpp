@@ -1,62 +1,48 @@
 #include <iostream>
+#include <fstream>
+#include <string>
+
 using namespace std;
 
 int main() {
 
-    int filas, columnas;
+    ifstream entrada("productos.txt");
 
-    cout << "Filas: ";
-    cin >> filas;
+    if (!entrada) {
 
-    cout << "Columnas: ";
-    cin >> columnas;
+        cout << "No se pudo abrir productos.txt";
 
-    while (filas <= 0 || columnas <= 0) {
-
-        cout << "Dimensiones invalidas.\n";
-
-        cout << "Filas: ";
-        cin >> filas;
-
-        cout << "Columnas: ";
-        cin >> columnas;
+        return 0;
     }
 
-    int **matriz = new int*[filas];
+    ofstream salida("reporte.txt");
 
-    for (int i = 0; i < filas; i++) {
+    string nombre;
+    double precio;
+    int cantidad;
 
-        matriz[i] = new int[columnas];
-    }
+    while (entrada >> nombre >> precio >> cantidad) {
 
-    cout << "\nIngrese los elementos:\n";
+        if (precio < 0 || cantidad < 0) {
 
-    for (int i = 0; i < filas; i++) {
-
-        for (int j = 0; j < columnas; j++) {
-
-            cin >> matriz[i][j];
-        }
-    }
-
-    cout << "\nMatriz:\n";
-
-    for (int i = 0; i < filas; i++) {
-
-        for (int j = 0; j < columnas; j++) {
-
-            cout << matriz[i][j] << " ";
+            cout << "Datos invalidos para " << nombre << endl;
+            continue;
         }
 
-        cout << endl;
+        double subtotal = precio * cantidad;
+        double descuento = subtotal * 0.10;
+        double total = subtotal - descuento;
+
+        salida << nombre << " "
+               << subtotal << " "
+               << descuento << " "
+               << total << endl;
     }
 
-    for (int i = 0; i < filas; i++) {
+    entrada.close();
+    salida.close();
 
-        delete[] matriz[i];
-    }
-
-    delete[] matriz;
+    cout << "Reporte generado correctamente.";
 
     return 0;
 }
