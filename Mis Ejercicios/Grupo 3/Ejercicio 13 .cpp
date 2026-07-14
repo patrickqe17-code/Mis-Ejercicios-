@@ -1,52 +1,52 @@
 #include <iostream>
+#include <fstream>
 #include <string>
+
 using namespace std;
-
-struct Producto {
-
-    string nombre;
-    int cantidad;
-};
 
 int main() {
 
-    int n;
+    ifstream entrada("productos.txt");
 
-    cout << "Cantidad de productos: ";
-    cin >> n;
+    if (!entrada) {
 
-    while (n <= 0 || n > 100) {
+        cout << "No se pudo abrir el archivo.";
 
-        cout << "Cantidad invalida. Intente nuevamente: ";
-        cin >> n;
+        return 0;
     }
 
-    Producto inventario[100];
+    ofstream salida("descuento.txt");
 
-    for (int i = 0; i < n; i++) {
+    string nombre;
+    double precio;
 
-        cout << "\nNombre del producto: ";
-        cin >> inventario[i].nombre;
+    cout << "Lista de productos\n\n";
 
-        cout << "Cantidad: ";
-        cin >> inventario[i].cantidad;
+    while (entrada >> nombre >> precio) {
 
-        while (inventario[i].cantidad < 0) {
+        if (precio < 0) {
 
-            cout << "Cantidad invalida. Intente nuevamente: ";
-            cin >> inventario[i].cantidad;
+            cout << "Precio invalido para " << nombre << endl;
+            continue;
         }
-    }
 
-    cout << "\n=== INVENTARIO ===\n";
+        double descuento = precio * 0.10;
+        double precioFinal = precio - descuento;
 
-    for (int i = 0; i < n; i++) {
-
-        cout << inventario[i].nombre
+        cout << nombre << "  "
+             << precio
              << " -> "
-             << inventario[i].cantidad
+             << precioFinal
              << endl;
+
+        salida << nombre << " "
+               << precioFinal << endl;
     }
+
+    entrada.close();
+    salida.close();
+
+    cout << "\nArchivo descuento.txt generado correctamente.";
 
     return 0;
 }
